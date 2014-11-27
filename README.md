@@ -1,40 +1,107 @@
-# Linked Lists 1
+# Linked Lists
 
-Linked Lists are lists that are composed of node each referencing the next.  In the most general implementation each node holds a reference to an element of the list.
+[Linked Lists](http://en.wikipedia.org/wiki/Linked_list) are one approach to producing a _dynamically_ sized collection of elements. In a Linked List, a collection of elements is represented as a chain of **Nodes**.
+
+The most basic Node has two things:
+
+ * A value (also known as an _element_)
+ * A pointer to another Node
+
+![Linked List](assets/linked-list.png)
+
+In other words, Linked Lists are lists that are composed of many Nodes each referencing the next.
 
 ## Why is this important?
 
-A linked list is an ideal data structure when you know that you will have a list that will change size, and where you may need to add or remove elements from the middle of the list.
+Linked Lists are useful when you need a dynamically sized collection. Unlike a fixed-array, you can expand a Linked List by simple pointing its _last_ Node to a new Node.
 
-##Releases
+Linked Lists are also efficient when inserting nodes in the middle of a collection. We'll see why that is as we build out our `LinkedList` implementation.
 
-###Release 0: Implement `Node`
 
-Implement and write RSpec tests for the `Node` class, supporting the following minimum interface.
+## Releases
 
-####Interface
-- `new(element)` - Instantiate a new node with an element
-- `insertAfter(node)` - Insert a node after the receiver
-- `removeAfter()` - Remove the node after the receiver or `nil` if absent
+### Restrictions
 
-###Release 1: Implement `LinkedList`
+In the following releases do not use Ruby's built in data structures, including Arrays, Hashes or Sets in your implementation. The only structures you should use are objects from classes you define. You may also use the FixedArray class if you see a use.
+
+The _elements_ (values) you store in your list may be any kind of object, because they do not affect the implementation.
+
+### Release 0: Implement `Node`
+
+Since Linked Lists are made up of Nodes, let's start by creating a `Node` class.
+
+Implement and write RSpec tests for the `Node` class, supporting the following interface:
+
+#### Interface
+- `Node#new(element)`: Instantiate a new node containing `element`
+- `Node#insert_after(other_node)`: Insert `other_node` after this node. In other words, `other_node` becomes the node that this instance _points to_.
+- `Node#remove_after()`: Remove the node that this node points to (aka the node "after" this node)
+
+### Release 1: Implement `LinkedList`
+
+Now that you've implemented and tested `Node` let's build up our `LinkedList` class.
 
 Implement and write RSpec tests for the `LinkedList` class, supporting the following interface.
 
-####Interface
-- `new` - Instantiate a new linked list
-- `insertFirst` - Insert an element at the front of the list
-- `removeFirst` - Remove the element at the front of the list or `nil` if absent
-- `insertLast` - Insert an element at the back of the list
-  `removeLast` - Remove the element at the back of the list or `nil` if absent
+#### Interface
+- `LinkedList#new`: Instantiate a new linked list
+- `LinkedList#insert_first(element)`: Insert an element at the front of the list
+- `LinkedList#remove_first`: Remove the element at the front of the list or `nil` if absent
+- `LinkedList#insert_last(element)`: Insert an element at the back of the list
+  `LinkedList#remove_last`: Remove the element at the back of the list or `nil` if absent
 
-###Release 2: More methods
+### Release 2: More methods
 
-Implement and write RSpec tests for the following methods for the `LinkedList` class.
-- `get(index)` - Get the element from the receiver list at the index
-- `set(index, element)` - Set the element in the receiver list at the index
-  `size` - answer the size of the list
+Now you have a basic `LinkedList` class implemented. Let's expand it to make it more useful as a collection.
 
-##Resources
+Implement and write RSpec tests for the `LinkedList` class, expanding to support the following interface.
 
-* [Wikipedia: Linked List](http://en.wikipedia.org/wiki/Linked_list)
+#### Interface
+
+- `LinkedList#get(index)`: Get the element in the list at `index`
+- `LinkedList#set(index, element)`: Set the element in the list at `index`
+  `LinkedList#size`: Return the size of the list
+
+
+### Release 3: Complexity
+
+By now you have the following methods on your LinkedList class:
+
+ - `LinkedList#new`
+ - `LinkedList#insert_first(element)`
+ - `LinkedList#remove_first(element)`
+ - `LinkedList#insert_last(element)`
+ - `LinkedList#remove_last(element)`
+ - `LinkedList#get(index)`
+ - `LinkedList#set(index, element)`
+ - `LinkedList#size`
+
+For each of these methods, determine the big-O complexity of the method. Create a file `complexity.md` and write the big-O for each method, explaining why.
+
+For example, `LinkedList#new` is `O(1)` — whether our list ends up containing 0 elemnets or 1000, `#new` will always take the same amount of time.
+
+After you have figured out the big-O for each method, answer the following question in `complexity.md`:
+
+ * Why is inserting a value in the middle of the collection faster with a LinkedList than it is with an Array?
+
+### Release Interlude: Harder, Better, Faster, Stronger
+
+After the last release, you should have a sense of which methods in your Linked List implementation are fast and which are slow.
+
+Let's revisit our implementation and speed it up.
+
+### Release 4: Remove... faster
+
+In this release, ensure that `remove_first` and `remove_last` run in constant (`O(1)`) time. Remember, that means the `remove_*` methods should run just as fast whether it's a list of 2 nodes or 1000 nodes.
+
+Think about what state the list needs to keep track of to accomplish this. What design trade offs must you make to achieve this result?
+
+Since you've already written tests for these methods, ensure that they still run. You're using your tests as a _safety net_ in this refactor.
+
+### Release 5: Revisit `size`
+
+Change the implementation of you class to ensure that the `size` method runs in constant time as well. What did you have to do to make
+
+### Release 6: Reflect on Refactoring
+
+What changes did you need to make to complete releases 4 and 5? What are the _downsides_ to the change you made? Add your thoughts to `complexity.md`.
