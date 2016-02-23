@@ -1,6 +1,8 @@
 # Linked Lists
 
-[Linked Lists](http://en.wikipedia.org/wiki/Linked_list) are one approach to producing a _dynamically_ sized collection of elements. In a Linked List, a collection of elements is represented as a chain of **Nodes**.
+[Linked Lists](http://en.wikipedia.org/wiki/Linked_list) are one approach to producing a _dynamically_ sized collection of elements. Array Lists accomplish this as well, but they do it differently.
+
+In a Linked List, a collection of elements is represented as a chain of **Nodes**.
 
 The most basic Node has two things:
 
@@ -19,9 +21,9 @@ Linked Lists are also efficient when inserting nodes in the middle of a collecti
 
 ## Restrictions
 
-In the following releases do not use Ruby's built in data structures, including Arrays, Hashes or Sets in your implementation. The only structures you should use are objects from classes you define. You may also use the FixedArray class if you see a use.
+In the following releases do not use Ruby's built in data structures, including Arrays, Hashes or Sets in your implementation. The only structures you should use are objects from classes _you_ define. You may also use the FixedArray class if you think you need to.
 
-The _elements_ (values) you store in your list may be any kind of object, because they do not affect the implementation.
+The _elements_ (aka values) you store in your list may be any kind of object, the type of values you store in your list shouldn't affect the implementation.
 
 ## Release 0: Implement `Node`
 
@@ -57,8 +59,8 @@ Implement and write RSpec tests for the `LinkedList` class, expanding to support
 
 - `LinkedList#get(index)`: Get the element in the list at `index`
 - `LinkedList#set(index, element)`: Set the element in the list at `index`
-  `LinkedList#size`: Return the size of the list
-
+- `LinkedList#insert(index, element)`: Insert the value `element` in the List at position `index`
+- `LinkedList#size`: Return the size of the list
 
 ## Release 3: Complexity
 
@@ -71,23 +73,26 @@ By now you have the following methods on your LinkedList class:
  - `LinkedList#remove_last(element)`
  - `LinkedList#get(index)`
  - `LinkedList#set(index, element)`
+ - `LinkedList#insert(index, element)`
  - `LinkedList#size`
 
-For each of these methods, determine the big-O complexity of the method. Create a file `complexity.md` and write the big-O for each method, explaining why. How do these methods compare to similar methods in your [Resizable Array class](../../../data-structures-resizable-array-challenge)?
+For each of these methods, determine the big-O complexity of the method. Create a file `complexity.md` and write the big-O for each method, explaining why.
 
-For example, `LinkedList#new` is `O(1)` — whether our list ends up containing 0 elemnets or 1000, `#new` will always take the same amount of time.
+For example, `LinkedList#new` is `O(1)` — whether our list ends up containing 0 elements or 1000, `#new` will always take the same amount of time.
 
 After you have figured out the big-O for each method, answer the following question in `complexity.md`:
 
- * Why is inserting a value in the middle of the collection faster with a LinkedList than it is with an Array?
+ * Why is inserting a value into a LinkedList potentially faster than inserting a value into an ArrayList?
 
-## Release Interlude: Harder, Better, Faster, Stronger
+## Note on Stretches
+
+The questions posed in the stretches below might end up being interview questions. Focus on getting your cores done first, but consider returning to these stretches when you have time.
+
+## Stretch 1: Remove... faster
 
 After the last release, you should have a sense of which methods in your Linked List implementation are fast and which are slow.
 
 Let's revisit our implementation and speed it up.
-
-## Release 4: Remove... faster
 
 In this release, ensure that `remove_first` and `remove_last` run in constant (`O(1)`) time. Remember, that means the `remove_*` methods should run just as fast whether it's a list of 2 nodes or 1000 nodes.
 
@@ -95,10 +100,10 @@ Think about what state the list needs to keep track of to accomplish this. What 
 
 Since you've already written tests for these methods, ensure that they still run. You're using your tests as a _safety net_ in this refactor.
 
-## Release 5: Revisit `size`
+## Stretch 2: Revisit `size`
 
 Change the implementation of you class to ensure that the `size` method runs in constant time as well. What did you have to do to make
 
-## Release 6: Reflect on Refactoring
+## Stretch 3: Reflect on Refactoring
 
 What changes did you need to make to complete releases 4 and 5? What are the _downsides_ to the change you made? Add your thoughts to `complexity.md`.
