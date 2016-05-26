@@ -23,6 +23,7 @@ class LinkedList
 			@current_node = @linked_list
 		else
 			@linked_list = nil
+			@current_node = @linked_list
 		end
 	end
 
@@ -31,23 +32,22 @@ class LinkedList
 			@linked_list = Node.new(element)
 			@current_node = @linked_list
 		else
-			head_holder = @linked_list
-			(size-1).times { @linked_list = @linked_list.next_node }
-			@linked_list.next_node = Node.new(element)
-			@linked_list = head_holder
+			cursor = @linked_list
+			(size-1).times { cursor = cursor.next_node }
+			cursor.next_node = Node.new(element)
 			@current_node = @linked_list
 		end
 	end
 
 	def remove_last
 		if (@linked_list.next_node != nil)
-			head_holder = @linked_list
-			(size-2).times { @linked_list = @linked_list.next_node }
-			@linked_list.next_node = nil
-			@linked_list = head_holder
+			cursor = @linked_list
+			(size-2).times { cursor = cursor.next_node }
+			cursor.next_node = nil
 			@current_node = @linked_list
 		else
 			@linked_list = nil
+			@current_node = @linked_list
 		end
 	end
 
@@ -62,8 +62,8 @@ class LinkedList
 	def size
 		return 0 if @linked_list == nil
 		i = 1
-		@current_node = @linked_list
-		while @current_node.next_node != nil
+		cursor = @linked_list
+		while cursor.next_node != nil
 			next_node
 			i += 1
 		end
@@ -72,12 +72,14 @@ class LinkedList
 
 	def all
 		array = []
-		head_holder = @linked_list
+		cursor = @linked_list
 		size.times do
-			array << @linked_list.element
-			@linked_list = @linked_list.next_node
+			array << cursor.element
+			cursor = cursor.next_node
 		end
-		@linked_list = head_holder
 		array
 	end
 end
+
+# things to talk about: namespace (next_node in node class and next_node in linked_list is the same)
+# rspec: how to use let so that there's not as much repetitive code
